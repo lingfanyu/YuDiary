@@ -1,4 +1,4 @@
-package segment;
+package Segment;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -6,19 +6,19 @@ import java.util.ArrayList;
 @SuppressWarnings("serial")
 public class server_Segment implements Serializable{
 
-	//报文头部
+	//锟斤拷锟斤拷头锟斤拷
 	public int head;
-	//用户信息
+	//锟矫伙拷锟斤拷息
 	public User user = new User();
 	
-	//登陆失败标志
+	//锟斤拷陆失锟杰憋拷志
 	public int logfault;
-	//日记信息
+	//锟秸硷拷锟斤拷息
 	public ArrayList<Diary_Segment> dairylist = new ArrayList<Diary_Segment>();
 	
-	//在线用户信息
+	//锟斤拷锟斤拷锟矫伙拷锟斤拷息
 	public ArrayList<String> users_list = new ArrayList<String>();
 	
-	//排行榜信息
+	//锟斤拷锟叫帮拷锟斤拷息
 	public ArrayList<Rank> rank_list = new ArrayList<Rank>();
 }

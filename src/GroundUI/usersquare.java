@@ -1,15 +1,18 @@
-package UI;
+package GroundUI;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -18,24 +21,28 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.event.*;
 
-import segment.Diary_Segment;
+import Ground.JNTextArea;
+import Segment.Diary_Segment;
 
 public class usersquare extends JFrame {
 	private JLabel juser = new JLabel();
-	//À—À˜Ω·π˚
+	//ÊêúÁ¥¢ÁªìÊûú
 	private ArrayList<Diary_Segment> result_list;
 		
-	private DefaultListModel<String> result_listmodel = new DefaultListModel<String>();
-	private JList<String> jcatalog = new JList<String>(result_listmodel);
-	private JScrollPane jscatalog = new JScrollPane(jcatalog);
+	private DefaultListModel<String> result_listmodel ;//= new DefaultListModel<String>();
+	private JList<String> jcatalog ;
+	private JScrollPane jscatalog ;//= new JScrollPane(jcatalog);
 	diarysquare dairysquare = null;
 	
-	public usersquare(Socket socket ,ArrayList<Diary_Segment> result) {
+	public usersquare(final Socket socket ,ArrayList<Diary_Segment> result) {
+		System.out.println(result);
+		result_listmodel = new DefaultListModel<String>();
 		result_list = result;
 		for(int i=0;i<result_list.size();i++){
 			result_listmodel.addElement(result_list.get(i).title);
 		}
-		
+		jcatalog = new JList<String>(result_listmodel);
+		jscatalog = new JScrollPane(jcatalog);
 		setContentPane(
 				new JPanel() {
 					/**
@@ -56,18 +63,24 @@ public class usersquare extends JFrame {
 				}
 			);
 		
-		Font font1=new Font("Œ¢»Ì—≈∫⁄",Font.BOLD,36);
+		Font font1=new Font("ÂæÆËΩØÈõÖÈªë",Font.BOLD,20);
 		
 		//juser
-		String user="»»¥¯”„";
+		String user= "‰ΩúËÄÖ (‚óè'‚ó°'‚óè)Ôºö"+JNTextArea.search_name;
 		juser.setBounds(100,50,600,50);
 		juser.setText(user);
 		juser.setFont(font1);
-		juser.setForeground(Color.white);
+		Color chead = new Color(246,251,253);
+		juser.setForeground(chead);
 		juser.setAlignmentX(CENTER_ALIGNMENT);
 		add(juser);
 		
 		//catalog
+		jcatalog.setOpaque(false);
+		jcatalog.setFixedCellHeight(25);
+		jcatalog.setFont(font1);
+		((JComponent)jcatalog.getCellRenderer()).setOpaque(false);
+		jcatalog.setForeground(Color.white);
 		jscatalog.setBounds(150, 120, 500, 400);
 		jscatalog.setBorder(null);
 		jscatalog.setOpaque(false);
@@ -77,7 +90,6 @@ public class usersquare extends JFrame {
 		
 		jcatalog.addListSelectionListener(new ListSelectionListener() {
 			
-			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				// TODO Auto-generated method stub
 				int[] indices=jcatalog.getSelectedIndices();

@@ -1,10 +1,10 @@
-package server;
+package Server;
 
-import segment.Diary_Segment;
-import segment.client_Segment;
-import segment.server_Segment;
-import segment.Rank;
-import database.Client_DB;
+import Segment.Diary_Segment;
+import Segment.client_Segment;
+import Segment.server_Segment;
+import Segment.Rank;
+import Database.Client_DB;
 
 import java.io.*;
 import java.net.*;
@@ -18,17 +18,17 @@ import java.awt.*;
 import javax.swing.*;
 
 public class Server extends JFrame {
-  //Á¬½ÓÊı¾İ¿â
+  //è¿æ¥æ•°æ®åº“
   Client_DB db = new Client_DB();
 	
-  //¿Í»§¼äÍ¨ĞÅµÄÏûÏ¢ºĞ×Ó
+  //å®¢æˆ·é—´é€šä¿¡çš„æ¶ˆæ¯ç›’å­
   static final int maxclient=100;
   server_tcb [] tcb_pool = new server_tcb[maxclient];
   
-  //·şÎñÆ÷×´Ì¬ĞÅÏ¢ÏÔÊ¾Çø
+  //æœåŠ¡å™¨çŠ¶æ€ä¿¡æ¯æ˜¾ç¤ºåŒº
   private JTextArea jta = new JTextArea();
   
-  //µ±Ç°ÔÚÏß¿Í»§¶ËÊıÁ¿
+  //å½“å‰åœ¨çº¿å®¢æˆ·ç«¯æ•°é‡
   int client_number=0;
   
   public static void main(String[] args) {
@@ -45,7 +45,7 @@ public class Server extends JFrame {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setVisible(true);
 
-    //³õÊ¼»¯tcb³Ø
+    //åˆå§‹åŒ–tcbæ± 
     for(int i=0;i<maxclient;i++)
     	tcb_pool[i]=null;
     
@@ -63,12 +63,12 @@ public class Server extends JFrame {
 	    // Listen for a new connection request
 	    Socket socket = serverSocket.accept();
 	    
-	    //ÒÑ¾­Ê¹ÓÃµÄtcbÊÇ·ñ³¬¹ıÊıÁ¿ÏŞÖÆ
+	    //å·²ç»ä½¿ç”¨çš„tcbæ˜¯å¦è¶…è¿‡æ•°é‡é™åˆ¶
 	    if(client_number>=maxclient){
 	    	break;
 	    }
 	    
-	    //Ñ°ÕÒ¿ÉÒÔÊ¹ÓÃµÄtcb
+	    //å¯»æ‰¾å¯ä»¥ä½¿ç”¨çš„tcb
 	    int i=0;
 	    for(;i<maxclient;i++){	
 	    	if(tcb_pool[i]==null){
@@ -76,7 +76,7 @@ public class Server extends JFrame {
 	    	}
 	    }
 	    
-	    //¸ø¸ÃÓÃ»§·ÖÅätcb
+	    //ç»™è¯¥ç”¨æˆ·åˆ†é…tcb
 	    tcb_pool[i]=new server_tcb();
 	    tcb_pool[i].lock = new ReentrantLock();
 	    tcb_pool[i].client_condition = tcb_pool[i].lock.newCondition();
@@ -107,7 +107,7 @@ public class Server extends JFrame {
       
     }
   }
-  //ÖØÆôºó£¬ÇåÀíÊı¾İ¿âÖĞµÄÔÚÏßÓÃ»§
+  //é‡å¯åï¼Œæ¸…ç†æ•°æ®åº“ä¸­çš„åœ¨çº¿ç”¨æˆ·
   public void clean(){
 	  try {
 		    ArrayList<String> allon=db.getAllonLineuser();
@@ -119,10 +119,10 @@ public class Server extends JFrame {
 			e.printStackTrace();
 		}
   }
-  //ÃæÏò¿Í»§ÇëÇóµÄ¼àÌıÏß³Ì
+  //é¢å‘å®¢æˆ·è¯·æ±‚çš„ç›‘å¬çº¿ç¨‹
   class HandleAClient implements Runnable {
 	  
-    //¿Í»§¶ËÊ¶±ğ±êÖ¾
+    //å®¢æˆ·ç«¯è¯†åˆ«æ ‡å¿—
     int client_tag; 
     Socket socket;
     /** Construct a thread */
@@ -141,7 +141,7 @@ public class Server extends JFrame {
     	
         // Continuously serve the client
         while (true) {
-        	//½ÓÊÕÀ´×Ô¿Í»§¶ËµÄÊı¾İ±¨ÎÄ
+        	//æ¥æ”¶æ¥è‡ªå®¢æˆ·ç«¯çš„æ•°æ®æŠ¥æ–‡
         	recv = new ObjectInputStream(socket.getInputStream());
 	        client_Segment recvseg = null;
 			try {			
@@ -151,39 +151,39 @@ public class Server extends JFrame {
 				e.printStackTrace();
 			}
 			//System.out.println(recvseg.head);
-			//ÅĞ¶ÏÇëÇóÀàĞÍ
+			//åˆ¤æ–­è¯·æ±‚ç±»å‹
           switch(recvseg.head){
-          //µÇÂ½ÇëÇó
+          //ç™»é™†è¯·æ±‚
           case 1:{
         	  try {
         		  server_Segment sendseg = new server_Segment();
-        		  //Ê×ÏÈ¼ì²é¸ÃÕË»§ÊÇ·ñ´æÔÚ
-        		  //ÔÙ¼ì²éÃÜÂëÊÇ·ñÕıÈ·
-        		  //ÔÙ²éÕÒ¸ÃÕË»§ÊÇ·ñÔÚÏß
+        		  //é¦–å…ˆæ£€æŸ¥è¯¥è´¦æˆ·æ˜¯å¦å­˜åœ¨
+        		  //å†æ£€æŸ¥å¯†ç æ˜¯å¦æ­£ç¡®
+        		  //å†æŸ¥æ‰¾è¯¥è´¦æˆ·æ˜¯å¦åœ¨çº¿
         		  
         		  if(!db.findAccount(recvseg.user.name)){
-        			  //ÏÈÅĞ¶ÏÊÇ·ñ´æÔÚÓÃ»§Ãû
-        			  //Èç¹û²»´æÔÚ
+        			  //å…ˆåˆ¤æ–­æ˜¯å¦å­˜åœ¨ç”¨æˆ·å
+        			  //å¦‚æœä¸å­˜åœ¨
         			  sendseg.head = 2;
         			  sendseg.logfault =1;
         			  
         		  }else if(!db.findAccount(recvseg.user.name, recvseg.user.password)){
-        			  //ÔÙ¼ì²éÃÜÂëÊÇ·ñÕıÈ·
+        			  //å†æ£€æŸ¥å¯†ç æ˜¯å¦æ­£ç¡®
         			  sendseg.head = 2;
         			  sendseg.logfault =2;
         		  }else if(db.findOnlineUser(recvseg.user.name)){
         			  
-        			  //ÔÙ¼ì²éÊÇ·ñÒÑ¾­ÔÚÏß
-        			  //Èç¹ûÒÑ¾­ÔÚÏß
+        			  //å†æ£€æŸ¥æ˜¯å¦å·²ç»åœ¨çº¿
+        			  //å¦‚æœå·²ç»åœ¨çº¿
         			  sendseg.head = 2;
         			  sendseg.logfault =3;
         			  
         		  }else{
-        			  //Èç¹ûµÇÂ½³É¹¦£¬¼ÓÈëÔÚÏßÓÃ»§ÁĞ±í
+        			  //å¦‚æœç™»é™†æˆåŠŸï¼ŒåŠ å…¥åœ¨çº¿ç”¨æˆ·åˆ—è¡¨
         			  db.addOnlineUser(recvseg.user.name,client_tag);
         			  
         			  sendseg.user.name = recvseg.user.name;
-        			  //¸üĞÂÆäËûÔÚÏßÓÃ»§µÄÔÚÏßÓÃ»§ÁĞ±í
+        			  //æ›´æ–°å…¶ä»–åœ¨çº¿ç”¨æˆ·çš„åœ¨çº¿ç”¨æˆ·åˆ—è¡¨
         			  int i=0;
         			  for(;i<maxclient;i++){
         				  if(tcb_pool[i] != null && i!= client_tag){
@@ -193,11 +193,11 @@ public class Server extends JFrame {
         	            	  send.flush();
         				  }
         			  }
-        			  //¸ø×Ô¼º·µ»ØµÇÂ½·´À¡
+        			  //ç»™è‡ªå·±è¿”å›ç™»é™†åé¦ˆ
             		  sendseg.head = 1;
         			  sendseg.user.name = recvseg.user.name;
         			  sendseg.user.icon = db.geticon(recvseg.user.name);
-        			  //·µ»ØËùÓĞÔÚÏßÓÃ»§ĞÅÏ¢
+        			  //è¿”å›æ‰€æœ‰åœ¨çº¿ç”¨æˆ·ä¿¡æ¯
         			  sendseg.users_list = db.getAllonLineuser();
         		  }  		    			  
         		  send = new ObjectOutputStream(socket.getOutputStream());
@@ -208,25 +208,25 @@ public class Server extends JFrame {
   					e.printStackTrace();
   				}
           }break;
-          //×¢²áÇëÇó
+          //æ³¨å†Œè¯·æ±‚
           case 2:{
         	  
         	  try {
         		  server_Segment sendseg = new server_Segment();
-        		  //Ê×ÏÈ¼ì²é¸ÃÕË»§ÊÇ·ñ´æÔÚ
+        		  //é¦–å…ˆæ£€æŸ¥è¯¥è´¦æˆ·æ˜¯å¦å­˜åœ¨
         		  
         		  if(db.findAccount(recvseg.user.name)){
-        			  //ÏÈÅĞ¶ÏÊÇ·ñ´æÔÚÓÃ»§Ãû
-        			  //Èç¹û²»´æÔÚ
+        			  //å…ˆåˆ¤æ–­æ˜¯å¦å­˜åœ¨ç”¨æˆ·å
+        			  //å¦‚æœä¸å­˜åœ¨
         			  sendseg.head = 5;
         			  
         		  }else{
         			  db.addAccount(recvseg.user.name, recvseg.user.password, recvseg.user.icon);
-        			  //¼ÓÈëÔÚÏßÓÃ»§ÁĞ±í
+        			  //åŠ å…¥åœ¨çº¿ç”¨æˆ·åˆ—è¡¨
         			  db.addOnlineUser(recvseg.user.name,client_tag);
         			  
         			  sendseg.user.name = recvseg.user.name;
-        			  //¸üĞÂÆäËûÔÚÏßÓÃ»§µÄÔÚÏßÓÃ»§ÁĞ±í
+        			  //æ›´æ–°å…¶ä»–åœ¨çº¿ç”¨æˆ·çš„åœ¨çº¿ç”¨æˆ·åˆ—è¡¨
         			  int i=0;
         			  for(;i<maxclient;i++){
         				  if(tcb_pool[i] != null && i!= client_tag){
@@ -236,10 +236,10 @@ public class Server extends JFrame {
         	            	  send.flush();
         				  }
         			  }
-        			  //¸ø×Ô¼º·µ»ØµÇÂ½·´À¡
+        			  //ç»™è‡ªå·±è¿”å›ç™»é™†åé¦ˆ
             		  sendseg.head = 4;
         			  sendseg.user.name = recvseg.user.name;
-        			  //·µ»ØËùÓĞÔÚÏßÓÃ»§ĞÅÏ¢
+        			  //è¿”å›æ‰€æœ‰åœ¨çº¿ç”¨æˆ·ä¿¡æ¯
         			  sendseg.users_list = db.getAllonLineuser();
                       sendseg.user.icon = db.geticon(recvseg.user.name);
         		  }  		    			  
@@ -251,7 +251,7 @@ public class Server extends JFrame {
   					e.printStackTrace();
   				}
           }break;
-          //ÉÏ´«ÈÕÖ¾ÇëÇó
+          //ä¸Šä¼ æ—¥å¿—è¯·æ±‚
           case 3:{
         	  try {
 				db.adddairy(recvseg.dairy.author, recvseg.dairy.title, recvseg.dairy.zan_number, 
@@ -261,12 +261,15 @@ public class Server extends JFrame {
 					e.printStackTrace();
 				}
           }break;
-          //µÇÂ½ÈÕ¼Ç¹ã³¡ÇëÇó
+          //ç™»é™†æ—¥è®°å¹¿åœºè¯·æ±‚
           case 4:{
         	    try {
         	    	ArrayList<Diary_Segment> dairys = db.getalldairys();
         	    	dairys.sort(new DairyComparator());
-        	    	
+        	    	for(int j=0;j<dairys.size();j++){
+        	    		int icon = db.geticon(dairys.get(j).author);
+        	    		dairys.get(j).icon = icon;
+        	    	}
         	    	server_Segment sendseg = new server_Segment();
         	    	int i;
         	    	for(i=0;i<dairys.size();i++){
@@ -289,7 +292,7 @@ public class Server extends JFrame {
   					e.printStackTrace();
   				}
           }break;
-          //¹ã³¡ËÑË÷ÇëÇó
+          //å¹¿åœºæœç´¢è¯·æ±‚
           case 5:{
         	  try {
       	    	ArrayList<Diary_Segment> dairys = db.getdairys(recvseg.user.name);
@@ -307,11 +310,11 @@ public class Server extends JFrame {
 					e.printStackTrace();
 				}
           }break;
-          //·ÖÏíÈÕÖ¾ÇëÇó
+          //åˆ†äº«æ—¥å¿—è¯·æ±‚
           case 6:{  
         	  try {
         		  
-            	  //ÉèÖÃ×ª·¢±¨ÎÄ
+            	  //è®¾ç½®è½¬å‘æŠ¥æ–‡
 	        	  Diary_Segment dairy_seg= new Diary_Segment();
 	        	  dairy_seg.author=recvseg.dairy.author;
 	        	  dairy_seg.title=recvseg.dairy.title;
@@ -323,10 +326,10 @@ public class Server extends JFrame {
 	        	  sendseg.dairylist.add(dairy_seg);
 	        	  sendseg.head=8;
 	        	  
-	        	  //×ª·¢¸øÆäËû¿Í»§
+	        	  //è½¬å‘ç»™å…¶ä»–å®¢æˆ·
 	        	  int i;
 	        	  for(i=0;i<recvseg.friend_list.size();i++){
-	        		  //ÕÒµ½¶ÔÓ¦µÄtcb
+	        		  //æ‰¾åˆ°å¯¹åº”çš„tcb
 					 int connfd=db.getconnfd(recvseg.friend_list.get(i));
 					 if(connfd != client_tag){
 				      	 send = new ObjectOutputStream(tcb_pool[connfd].socket.getOutputStream());
@@ -339,18 +342,18 @@ public class Server extends JFrame {
 					e.printStackTrace();
 				}
           }break;
-          //¿Í»§×¢ÏúÇëÇó
+          //å®¢æˆ·æ³¨é”€è¯·æ±‚
           case 7:{
         	  try {
-        		  //´ÓÔÚÏßÓÃ»§ÖĞÉ¾È¥
+        		  //ä»åœ¨çº¿ç”¨æˆ·ä¸­åˆ å»
         		  db.deleteOnlineUser(recvseg.user.name);
-        		  //Í¨ÖªÆäËûÓÃ»§É¾È¥ÔÚÏßÓÃ»§ĞÅÏ¢
+        		  //é€šçŸ¥å…¶ä»–ç”¨æˆ·åˆ å»åœ¨çº¿ç”¨æˆ·ä¿¡æ¯
         		  server_Segment sendseg = new server_Segment();
 	        	  sendseg.head=9;
 	        	  sendseg.user.name = recvseg.user.name;
 	        	  
 	        	  ArrayList<Integer> connfd_list = db.getallconnfd();
-	        	  //×ª·¢¸øÆäËû¿Í»§
+	        	  //è½¬å‘ç»™å…¶ä»–å®¢æˆ·
 	        	  int i;
 	        	  for(i=0;i<connfd_list.size();i++){
 			      	 send = new ObjectOutputStream(tcb_pool[connfd_list.get(i)].socket.getOutputStream());
@@ -362,7 +365,7 @@ public class Server extends JFrame {
   					e.printStackTrace();
   				}
           }break;
-          //ÓÃ»§¶ÔÈÕ¼ÇµãÔŞ
+          //ç”¨æˆ·å¯¹æ—¥è®°ç‚¹èµ
           case 8:{
         	  try {
         		  db.updateZan(recvseg.dairy.author, recvseg.dairy.date.getTime());
@@ -373,11 +376,15 @@ public class Server extends JFrame {
   					e.printStackTrace();
   				}
           }break;
-          //¹ã³¡¸üĞÂ
+          //å¹¿åœºæ›´æ–°
           case 9:{
         	  try {
       	    	ArrayList<Diary_Segment> dairys = db.getalldairys();
       	    	dairys.sort(new DairyComparator());
+      	    	for(int j=0;j<dairys.size();j++){
+    	    		int icon = db.geticon(dairys.get(j).author);
+    	    		dairys.get(j).icon = icon;
+    	    	}
       	    	
       	    	server_Segment sendseg = new server_Segment();
       	    	int i;
@@ -401,6 +408,41 @@ public class Server extends JFrame {
 					e.printStackTrace();
 				}
           };
+          case 999:
+        	  try {
+				db.deleteDiary(recvseg.dairy.author, recvseg.dairy.date.getTime());
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	  try {
+      	    	ArrayList<Diary_Segment> dairys = db.getalldairys();
+      	    	dairys.sort(new DairyComparator());
+      	    	
+      	    	server_Segment sendseg = new server_Segment();
+      	    	int i;
+      	    	for(i=0;i<dairys.size();i++){
+      	    		sendseg.dairylist.add(dairys.get(i));
+      	    	}
+      	    	
+      	    	ArrayList<Rank> rank_list = db.getallrank();
+      	    	rank_list.sort(new RankComparator());
+      	    	
+      	    	for(i=0;i<rank_list.size();i++){
+      	    		sendseg.rank_list.add(rank_list.get(i));
+      	    	}
+      	    	
+      	    	sendseg.head=3;
+      	    	send = new ObjectOutputStream(socket.getOutputStream());
+            	    send.writeObject(sendseg);
+            	    send.flush();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        	  break;
+          
+          
           default:break;
           }
         }
@@ -408,7 +450,7 @@ public class Server extends JFrame {
        }catch (IOException e1) {
 			// TODO Auto-generated catch block
 			//e1.printStackTrace();
-			//Èç¹û¿Í»§Àë¿ª¾ÍÊÍ·Å¶ÔÓ¦µÄtcb
+			//å¦‚æœå®¢æˆ·ç¦»å¼€å°±é‡Šæ”¾å¯¹åº”çš„tcb
 			tcb_pool[client_tag]=null;
 			System.out.println("client "+ client_tag+" is logout!");
 			try {
@@ -422,7 +464,7 @@ public class Server extends JFrame {
 	        	  sendseg.head=9;
 	        	  sendseg.user.name = name;
 	        	  
-	        	  //×ª·¢¸øÆäËû¿Í»§
+	        	  //è½¬å‘ç»™å…¶ä»–å®¢æˆ·
 	        	  int i;
 	        	  for(i=0;i<connfd_list.size();i++){
 			      	 try {
@@ -444,7 +486,6 @@ public class Server extends JFrame {
   }
   class DairyComparator implements Comparator<Diary_Segment>  
   {  
-      @Override  
       public int compare(Diary_Segment o1, Diary_Segment o2)  
       {  
           if (o1.zan_number > o2.zan_number)  
@@ -463,7 +504,6 @@ public class Server extends JFrame {
   } 
   class RankComparator implements Comparator<Rank>  
   {  
-      @Override  
       public int compare(Rank o1, Rank o2)  
       {  
           if (o1.zan_number > o2.zan_number)  

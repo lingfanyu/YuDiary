@@ -1,11 +1,11 @@
-package UI;
+package GroundUI;
 
 import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
 
-import segment.client_Segment;
+import Segment.client_Segment;
 
 import java.io.*;
 import java.net.Socket;
@@ -15,14 +15,15 @@ public class LoginFrame extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JTextField username = new JTextField("ÇëÊäÈëÕËºÅ");
-	private JPasswordField password = new JPasswordField("ÇëÊäÈëÃÜÂë");
-	private JButton jok = new JButton("µÇ   Â¼");
+	private JTextField username = new JTextField("è¯·è¾“å…¥è´¦å·");
+	private JPasswordField password = new JPasswordField("è¯·è¾“å…¥å¯†ç ");
+	private JButton jok = new JButton("ç™»   å½•");
 	private JLabel pic = new JLabel("hello");
 	private boolean usernameTyped = false;
 	private boolean passwordTyped = false;
 	
-	public LoginFrame(Socket socket) {
+	public LoginFrame(final Socket socket) {
+		this.setLocationRelativeTo(null);
 		setContentPane(
 			new JPanel() {
 				/**
@@ -53,7 +54,7 @@ public class LoginFrame extends JFrame {
 		
 		jok.setBounds(120,200,175,30);
 
-		Font sansbold14 = new Font("Î¢ÈíÑÅºÚ",Font.PLAIN,15);
+		Font sansbold14 = new Font("å¾®è½¯é›…é»‘",Font.PLAIN,15);
 		jok.setFont(sansbold14);
 		jok.setBorderPainted(false);
 		
@@ -140,6 +141,12 @@ public class LoginFrame extends JFrame {
 		setTitle("Login");
 		setSize(370,285);
 		//setLocationRelativeTo(client);
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		Dimension size = this.getSize();
+		int x = (screenSize.width - size.width) / 2;
+		int y = (screenSize.height - size.height) / 2;
+		this.setLocation( x, y );
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
 	}

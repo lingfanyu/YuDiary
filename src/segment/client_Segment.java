@@ -1,4 +1,4 @@
-package segment;
+package Segment;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -1,12 +1,20 @@
-package UI;
+package GroundUI;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
@@ -19,17 +27,22 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+import javax.swing.text.StyledDocument;
 
-import segment.Diary_Segment;
-import segment.client_Segment;
+import Segment.Diary_Segment;
+import Segment.client_Segment;
+import TextArea.Button;
+import TextArea.Text;
 
+@SuppressWarnings("serial")
 public class diarysquare extends JFrame{
-	private JTextArea jdiary = new JTextArea();
+	private JTextPane jdiary = new JTextPane();
 	private JScrollPane jsdiary = new JScrollPane(jdiary);
 	private JLabel jtitle = new JLabel();
-	private JButton jlike = new JButton();
+	private Button jlike = new Button(new ImageIcon("icon/like.png"),"ç‚¹èµ");
 	Diary_Segment diary;
-	public diarysquare(Socket socket, Diary_Segment d) {
+	public diarysquare(final Socket socket, final Diary_Segment d)
+	{
 		diary = d;
 		setContentPane(
 				new JPanel() {
@@ -52,8 +65,8 @@ public class diarysquare extends JFrame{
 			);
 		
 		ImageIcon likeicon = new ImageIcon("icon/like.png");
-		Font font1=new Font("Î¢ÈíÑÅºÚ",Font.BOLD,36);
-		Font font2=new Font("Î¢ÈíÑÅºÚ",Font.PLAIN,20);
+		Font font1=new Font("å¾®è½¯é›…é»‘",Font.BOLD,36);
+		Font font2=new Font("å¾®è½¯é›…é»‘",Font.PLAIN,15);
 		
 		//title
 		String title=diary.title;
@@ -65,11 +78,18 @@ public class diarysquare extends JFrame{
 		add(jtitle);
 		
 		//diary
-		String diary2=diary.text;
+		String diary2 = diary.text;
 		jsdiary.setBounds(150, 150, 500, 450);
-		jdiary.setText(diary2);// setText()·½·¨»á½«Ô­À´µÄÄÚÈİÇå³ı
-		//jdiary.append("JTextArea2");// append()·½·¨»á½«ÉèÖÃµÄ×Ö·û´®½ÓÔÚÔ­À´JTextAreaÄÚÈİÎÄ×ÖÖ®ºó.
-		jdiary.setLineWrap(true);// ÉèÖÃ»»ĞĞ
+		 
+		
+		
+		jdiary.setText(diary2);
+			
+		
+		
+		//jdiary.setText(diary2);// setText()æ–¹æ³•ä¼šå°†åŸæ¥çš„å†…å®¹æ¸…é™¤
+		//jdiary.append("JTextArea2");// append()æ–¹æ³•ä¼šå°†è®¾ç½®çš„å­—ç¬¦ä¸²æ¥åœ¨åŸæ¥JTextAreaå†…å®¹æ–‡å­—ä¹‹å.
+		//jdiary.setLineWrap(true);// è®¾ç½®æ¢è¡Œ
 		jdiary.setFont(font2);
 		jdiary.setForeground(Color.white);
 		jdiary.setEditable(false);
@@ -78,12 +98,11 @@ public class diarysquare extends JFrame{
 		jsdiary.setBorder(null);
 		jsdiary.setOpaque(false);
 		jsdiary.getViewport().setOpaque(false);
+		jsdiary.setWheelScrollingEnabled(true);
 		add(jsdiary);
-		
 		
 		//like
 		jlike.setBounds(700, 500, 30, 30);
-		jlike.setIcon(likeicon);
 		//jlike.setOpaque(true);
 		//jlike.setVisible(true);
 		add(jlike);
@@ -92,8 +111,8 @@ public class diarysquare extends JFrame{
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						diary.zan_number++;
-						//zan_button.setText("ÔŞ"+dairy_list.get(dairy_index).zan_number);
-						//Ïò·şÎñÆ÷·¢ËÍ±»µãÔŞµÄÈÕÖ¾
+						//zan_button.setText("èµ"+dairy_list.get(dairy_index).zan_number);
+						//å‘æœåŠ¡å™¨å‘é€è¢«ç‚¹èµçš„æ—¥å¿—
 						client_Segment sendseg = new client_Segment();
 						sendseg.head = 8;
 						
@@ -102,7 +121,7 @@ public class diarysquare extends JFrame{
 						sendseg.dairy.date.setTime(diary.date.getTime());
 						
 						try {
-							//·¢ËÍµ½·şÎñÆ÷
+							//å‘é€åˆ°æœåŠ¡å™¨
 							ObjectOutputStream send =null;
 							send = new ObjectOutputStream(socket.getOutputStream());
 							send.writeObject(sendseg);

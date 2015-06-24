@@ -1,9 +1,10 @@
-package UI;
+ï»¿package GroundUI;
 
-import segment.User;
-import segment.client_Segment;
-import segment.server_Segment;
-import segment.Diary_Segment;
+import Ground.JNTextArea;
+import Segment.User;
+import Segment.client_Segment;
+import Segment.server_Segment;
+import Segment.Diary_Segment;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,53 +19,53 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-//Ö÷½çÃæ
+//ä¸»ç•Œé¢
 @SuppressWarnings("serial")
-public class Diary extends JFrame{
+public class Dairy extends JPanel{
 	
-	//µÇÂ½°´Å¥
-	private JButton login_button = new JButton("µÇÂ½");
-	//×¢²á°´Å¥
-	private JButton register_button = new JButton("×¢²á");
-	//×¢Ïú°´Å¥
-	private JButton logout_button = new JButton("×¢Ïú");
-	//¹ã³¡°´Å¥
-	private JButton square_button = new JButton("¹ã³¡");
-	//ÊÕµ½°´Å¥
-    private JButton recv_button = new JButton("ĞÅÏä");
-	//ÉÏ´«ÈÕ¼Ç°´Å¥
-	private JButton up_button = new JButton("ÉÏ´«ÈÕ¼Ç");
-	//·ÖÏíÈÕ¼Ç°´Å¥
-	private JButton share_button = new JButton("·ÖÏíÈÕ¼Ç");
+	//ç™»é™†æŒ‰é’®
+	private JButton login_button = new JButton("ç™»é™†");
+	//æ³¨å†ŒæŒ‰é’®
+	private JButton register_button = new JButton("æ³¨å†Œ");
+	//æ³¨é”€æŒ‰é’®
+	private JButton logout_button = new JButton("æ³¨é”€");
+	//å¹¿åœºæŒ‰é’®
+	private JButton square_button = new JButton("å¹¿åœº");
+	//æ”¶åˆ°æŒ‰é’®
+    private JButton recv_button = new JButton("ä¿¡ç®±");
+	//ä¸Šä¼ æ—¥è®°æŒ‰é’®
+	private JButton up_button = new JButton("ä¸Šä¼ æ—¥è®°");
+	//åˆ†äº«æ—¥è®°æŒ‰é’®
+	private JButton share_button = new JButton("åˆ†äº«æ—¥è®°");
 	
-	//µÇÂ½ºóµÄ»¶Ó­±êÇ©
+	//ç™»é™†åçš„æ¬¢è¿æ ‡ç­¾
 	JLabel welcome_label = new JLabel(); 
-	//Óë·şÎñÆ÷ÓĞ½»»¥µÄ°´Å¥Ãæ°å¡ª¡ªÍøÂçÃæ°å
+	//ä¸æœåŠ¡å™¨æœ‰äº¤äº’çš„æŒ‰é’®é¢æ¿â€”â€”ç½‘ç»œé¢æ¿
 	JPanel netpanel = new JPanel(); 
-	//ÁÙÊ±ÏÔÊ¾Çø£¬ÒÔºóĞèÒªÉ¾µô
-	private JTextArea jta = new JTextArea(); 
+	//ä¸´æ—¶æ˜¾ç¤ºåŒºï¼Œä»¥åéœ€è¦åˆ æ‰
+	//private JTextArea jta = new JTextArea(); 
 	
-	//µÇÂ½Ğ¡½çÃæ
+	//ç™»é™†å°ç•Œé¢
 	LoginFrame diary_login;
 	
-	//×¢²á½çÃæ
+	//æ³¨å†Œç•Œé¢
 	RegisterFrame diary_register;
 	
-	//µÇÂ½¹ã³¡½çÃæ
+	//ç™»é™†å¹¿åœºç•Œé¢
 	square2 users_square;
-	//ÓÃ»§×ÊÁÏ
+	//ç”¨æˆ·èµ„æ–™
 	String username;
 	int icon;
-	//ÔÚÏßÓÃ»§ĞÅÏ¢
+	//åœ¨çº¿ç”¨æˆ·ä¿¡æ¯
 	public ArrayList<String> users_list = new ArrayList<String>();
 	
-	//ÓÃ»§½ÓÊÕµ½µÄÈÕÖ¾
+	//ç”¨æˆ·æ¥æ”¶åˆ°çš„æ—¥å¿—
 	private ArrayList<Diary_Segment> dairy_recv = new ArrayList<Diary_Segment>();
 	
 	//ObjectOutputStream send;
 	//ObjectInputStream recv;
-	public Diary(Socket socket){
-		//ÉèÖÃÍøÂçÃæ°å
+	public Dairy(final Socket socket){
+		//è®¾ç½®ç½‘ç»œé¢æ¿
 		netpanel.setLayout(new FlowLayout(0,4,1));
 	    netpanel.add(login_button);
 	    netpanel.add(register_button);
@@ -75,7 +76,7 @@ public class Diary extends JFrame{
         netpanel.add(share_button);
         netpanel.add(recv_button);
         
-	    //Òş²ØµÇÂ½×´Ì¬µÄ±êÇ©
+	    //éšè—ç™»é™†çŠ¶æ€çš„æ ‡ç­¾
 	    welcome_label.setVisible(false);
 	    logout_button.setVisible(false);
 	    square_button.setVisible(false);
@@ -83,25 +84,25 @@ public class Diary extends JFrame{
 	    share_button.setVisible(false);
 	    recv_button.setVisible(false);
 	    
-	    //ÉèÖÃÖ÷Ãæ°å
+	    //è®¾ç½®ä¸»é¢æ¿
 	    setLayout(new BorderLayout());
 	    add(netpanel, BorderLayout.NORTH);
-	    add(new JScrollPane(jta), BorderLayout.CENTER);
+	    //add(new JScrollPane(jta), BorderLayout.CENTER);
 
-	    setTitle("Client");
+	   // setTitle("Client");
 	    setSize(500, 300);
 	    setVisible(true);
 	    setLocation(100,100);
-		setResizable(false);
-	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setResizable(false);
+	   // setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	     // It is necessary to show the frame here!
 	    //u.setSize(720, 550);
 		
 		//u.setVisible(true);
 		//u.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    //Ìí¼Ó¼àÌı
+	    //æ·»åŠ ç›‘å¬
 	    
-	    //µÇÂ½°´Å¥¼àÌı
+	    //ç™»é™†æŒ‰é’®ç›‘å¬
 	    //dairy_login = new Login_Dialog(socket);
 	    //dairy_register = new register_Dialog(socket);
   		login_button.addActionListener(new ActionListener(){
@@ -114,28 +115,41 @@ public class Diary extends JFrame{
   				diary_register = new RegisterFrame(socket);
   			}
   		});
-  		//ÉÏ´«ÈÕÖ¾¼àÌı
+  		//ä¸Šä¼ æ—¥å¿—ç›‘å¬
   		up_button.addActionListener(new ActionListener(){
   			public void actionPerformed(ActionEvent e){
-  				up_dairy(socket);
+  				 if(JNTextArea.have == 1)
+			    	{
+  					up_dairy(socket);
+			    		JNTextArea.have = 0;
+			    	}
+				else JOptionPane.showMessageDialog(null,"(â—'â—¡'â—)è¯·å…ˆä¸Šè½½æ—¥å¿—", "System Info", JOptionPane.ERROR_MESSAGE);
+
   			}
   		});
-  		users_square = new square2(socket,icon);
+  		//
   		square_button.addActionListener(new ActionListener(){
   			public void actionPerformed(ActionEvent e){
+  				if (users_square == null)users_square = new square2(socket,icon);
   			    up_square(socket);
   			}
   		});
-  		//×¢Ïú°´Å¥¼àÌı
+  		//æ³¨é”€æŒ‰é’®ç›‘å¬
   		logout_button.addActionListener(new ActionListener(){
   			public void actionPerformed(ActionEvent e){
   			    up_logout(socket);
   			}
   		});
-  		//·ÖÏí°´Å¥¼àÌı
+  		//åˆ†äº«æŒ‰é’®ç›‘å¬
   		share_button.addActionListener(new ActionListener(){
   			public void actionPerformed(ActionEvent e){
-  			    up_share(socket);
+  			    if(JNTextArea.have == 1)
+  			    	{
+  			    		up_share(socket);
+  			    		JNTextArea.have = 0;
+  			    	}
+  				else JOptionPane.showMessageDialog(null,"(â—'â—¡'â—)è¯·å…ˆä¸Šè½½æ—¥å¿—", "System Info", JOptionPane.ERROR_MESSAGE);
+
   			}
   		});
   		recv_button.addActionListener(new ActionListener(){
@@ -147,16 +161,16 @@ public class Diary extends JFrame{
   			    
   			}
   		});
-  		//´´½¨¼àÌıÏß³Ì
+  		//åˆ›å»ºç›‘å¬çº¿ç¨‹
   		client_listen_pthread task=new client_listen_pthread(socket);
 		new Thread(task).start();
 	}
 	public void up_share(Socket socket){
-		//Ïò·şÎñÆ÷·¢ËÍÒª·ÖÏíµÄÈÕÖ¾
+		//å‘æœåŠ¡å™¨å‘é€è¦åˆ†äº«çš„æ—¥å¿—
 		new Sharediary(socket); 
 	}
 	public void up_logout(Socket socket){
-		//Ïò·şÎñÆ÷·¢ËÍ×¢Ïú
+		//å‘æœåŠ¡å™¨å‘é€æ³¨é”€
 		welcome_label.setVisible(false);
 	    logout_button.setVisible(false);
 	    square_button.setVisible(false);
@@ -168,7 +182,7 @@ public class Diary extends JFrame{
 		sendseg.head = 7;
 		sendseg.user.name = username;
 		try {
-			//·¢ËÍµ½·şÎñÆ÷
+			//å‘é€åˆ°æœåŠ¡å™¨
 			ObjectOutputStream send =null;
 			send = new ObjectOutputStream(socket.getOutputStream());
 			send.writeObject(sendseg);
@@ -179,11 +193,11 @@ public class Diary extends JFrame{
 		} 
 	}
 	public void up_square(Socket socket){
-		//Ïò·şÎñÆ÷ÇëÇóÊı¾İ
+		//å‘æœåŠ¡å™¨è¯·æ±‚æ•°æ®
 		client_Segment sendseg = new client_Segment();
 		sendseg.head = 4;
 		try {
-			//·¢ËÍµ½·şÎñÆ÷
+			//å‘é€åˆ°æœåŠ¡å™¨
 			ObjectOutputStream send =null;
 			send = new ObjectOutputStream(socket.getOutputStream());
 			send.writeObject(sendseg);
@@ -193,20 +207,20 @@ public class Diary extends JFrame{
 			e2.printStackTrace();
 		} 
 	}
-	//ÉÏ´«ÈÕÖ¾
+	//ä¸Šä¼ æ—¥å¿—
 	public void up_dairy(Socket socket){
-		String text = jta.getText();
-		//ÉèÖÃ±¨ÎÄ
+		String text = JNTextArea.text;
+		//è®¾ç½®æŠ¥æ–‡
 		client_Segment sendseg = new client_Segment();
 		sendseg.head = 3;
 		sendseg.dairy.text=text;
-		sendseg.dairy.author=username;
+		sendseg.dairy.author= username ;//username;
 		sendseg.dairy.public_flag = true;
-		sendseg.dairy.title = "123";
+		sendseg.dairy.title = username +" "+ JNTextArea.name;
 		sendseg.dairy.zan_number =0;
 		sendseg.dairy.date.setTime(new Date().getTime());
 		try {
-			//·¢ËÍµ½·şÎñÆ÷
+			//å‘é€åˆ°æœåŠ¡å™¨
 			ObjectOutputStream send =null;
 			send = new ObjectOutputStream(socket.getOutputStream());
 			send.writeObject(sendseg);
@@ -216,7 +230,7 @@ public class Diary extends JFrame{
 			e.printStackTrace();
 		}       
 	}
-	//¿Í»§¶Ë¼àÌıÏß³Ì
+	//å®¢æˆ·ç«¯ç›‘å¬çº¿ç¨‹
 	class client_listen_pthread implements Runnable {
 		Socket socket; // A connected socket
 	  
@@ -242,7 +256,7 @@ public class Diary extends JFrame{
 				}
 	          // Receive from server
 	        	 switch(recvseg.head){
-	        	 //µÇÂ½³É¹¦
+	        	 //ç™»é™†æˆåŠŸ
 	        	 case 1:{
 	        		 username = recvseg.user.name;
 	        		 icon = recvseg.user.icon;
@@ -251,15 +265,15 @@ public class Diary extends JFrame{
 	        			 users_list.add(recvseg.users_list.get(i));
 	        		 }
 	        		 for(i=0;i<users_list.size();i++){
-	        			 jta.append(users_list.get(i)+"\n");
+	        			// jta.append(users_list.get(i)+"\n");
 	        		 }
-	        		 JOptionPane.showMessageDialog(null, "µÇÂ½³É¹¦");
+	        		 JOptionPane.showMessageDialog(null, "ç™»é™†æˆåŠŸ");
 	        	     diary_login.setVisible(false);
-	        	    //Òş²ØÖ÷½çÃæµÄµÇÂ½°´Å¥
+	        	    //éšè—ä¸»ç•Œé¢çš„ç™»é™†æŒ‰é’®
 	 				login_button.setVisible(false);
 	 				register_button.setVisible(false);
-	 				welcome_label.setText("welcome£º "+username);
-	 				//ÏÔÊ¾Ö÷½çÃæµÄ°´Å¥
+	 				welcome_label.setText("welcomeï¼š "+username);
+	 				//æ˜¾ç¤ºä¸»ç•Œé¢çš„æŒ‰é’®
 	 				welcome_label.setVisible(true);
 	 				logout_button.setVisible(true);
 	 				square_button.setVisible(true);
@@ -267,24 +281,24 @@ public class Diary extends JFrame{
 	 				share_button.setVisible(true);
 	 				recv_button.setVisible(true);
 	        	 }break;
-	        	 //µÇÂ½Ê§°Ü
+	        	 //ç™»é™†å¤±è´¥
 	        	 case 2:{
 	        		 if(recvseg.logfault == 1){
-	        			 JOptionPane.showMessageDialog(null, "µÇÂ½Ê§°Ü£¡²»´æÔÚ¸ÃÓÃ»§Ãû£¡");
+	        			 JOptionPane.showMessageDialog(null, "ç™»é™†å¤±è´¥ï¼ä¸å­˜åœ¨è¯¥ç”¨æˆ·åï¼");
 	        		 }else if(recvseg.logfault == 2){
-	        			 JOptionPane.showMessageDialog(null, "µÇÂ½Ê§°Ü£¡ÃÜÂë´íÎó£¡");
+	        			 JOptionPane.showMessageDialog(null, "ç™»é™†å¤±è´¥ï¼å¯†ç é”™è¯¯ï¼");
 	        		 }else if(recvseg.logfault == 3){
-	        			 JOptionPane.showMessageDialog(null, "¸ÃÕËºÅÒÑ¾­µÇÂ½£¡");
+	        			 JOptionPane.showMessageDialog(null, "è¯¥è´¦å·å·²ç»ç™»é™†ï¼");
 	        		 }else{
 	        			 System.out.println("transfor error");
 	        		 }
 	        	 }break;
-	        	 //¹ã³¡µÇÂ½·´À¡
+	        	 //å¹¿åœºç™»é™†åé¦ˆ
 	        	 case 3:{
 	        		 users_square.seticon(icon);
 	        		 users_square.setup(socket, recvseg,username);
 	        	 }break;
-	        	 //×¢²á³É¹¦
+	        	 //æ³¨å†ŒæˆåŠŸ
 	        	 case 4:{
 	        		 username = recvseg.user.name;
 	        		 icon = recvseg.user.icon;
@@ -293,14 +307,14 @@ public class Diary extends JFrame{
 	        			 users_list.add(recvseg.users_list.get(i));
 	        		 }
 	        		 for(i=0;i<users_list.size();i++){
-	        			 jta.append(users_list.get(i)+"\n");
+	        			// jta.append(users_list.get(i)+"\n");
 	        		 }
 	        		 diary_register.setVisible(false);
-	        		 //Òş²ØÖ÷½çÃæµÄµÇÂ½°´Å¥
+	        		 //éšè—ä¸»ç•Œé¢çš„ç™»é™†æŒ‰é’®
 	 				login_button.setVisible(false);
 	 				register_button.setVisible(false);
-	 				welcome_label.setText("welcome£º "+username);
-	 				//ÏÔÊ¾Ö÷½çÃæµÄ°´Å¥
+	 				welcome_label.setText("welcomeï¼š "+username);
+	 				//æ˜¾ç¤ºä¸»ç•Œé¢çš„æŒ‰é’®
 	 				welcome_label.setVisible(true);
 	 				logout_button.setVisible(true);
 	 				square_button.setVisible(true);
@@ -308,34 +322,35 @@ public class Diary extends JFrame{
 	 				share_button.setVisible(true);
 	 				recv_button.setVisible(true);
 	        	 }break;
-	        	 //×¢²áÊ§°Ü
+	        	 //æ³¨å†Œå¤±è´¥
 	        	 case 5:{
-	        		 JOptionPane.showMessageDialog(null, "¸ÃÕËºÅÒÑ¾­±»×¢²á£¡");
+	        		 JOptionPane.showMessageDialog(null, "è¯¥è´¦å·å·²ç»è¢«æ³¨å†Œï¼");
 	        	 }break;
-	        	 //¹ã³¡ËÑË÷ÏìÓ¦
+	        	 //å¹¿åœºæœç´¢å“åº”
 	        	 case 6:{
 	        		 int i=0;
+	        		 users_square.result_list.clear();
 	        		 for(;i<recvseg.dairylist.size();i++){
 	        			 users_square.add_result(recvseg.dairylist.get(i));
 	        		 }
 	        		 users_square.showresult(socket);
 	        	 }break;
-	        	 //¸üĞÂÔÚÏßÓÃ»§ÁĞ±í
+	        	 //æ›´æ–°åœ¨çº¿ç”¨æˆ·åˆ—è¡¨
 	        	 case 7:{
 	        		 users_list.add(recvseg.user.name);
-	        		 jta.append(recvseg.user.name+"\n");
+	        		// jta.append(recvseg.user.name+"\n");
 	        	 }break;
-	        	 //ÊÕµ½ÆäËû¿Í»§·ÖÏíµÄÈÕÖ¾
+	        	 //æ”¶åˆ°å…¶ä»–å®¢æˆ·åˆ†äº«çš„æ—¥å¿—
 	        	 case 8:{
 	        		 int i=0;
 	        		 for(;i<recvseg.dairylist.size();i++){
 	        			 dairy_recv.add(recvseg.dairylist.get(i));
 	        		 }
-	        		 jta.append(dairy_recv.get(0).text+"\n");
+	        		// jta.append(dairy_recv.get(0).text+"\n");
 	        	 }break;
-	        	 //ÓĞÓÃ»§ÏÂÏß
+	        	 //æœ‰ç”¨æˆ·ä¸‹çº¿
 	        	 case 9:{
-	        		 //ÏÈÔÚusers_listÖĞÕÒµ½Ëü
+	        		 //å…ˆåœ¨users_listä¸­æ‰¾åˆ°å®ƒ
 	        		 int i=0;
 	        		 for(;i<users_list.size();i++){
 	        			 if(users_list.get(i).equals(recvseg.user.name)){
@@ -343,12 +358,12 @@ public class Diary extends JFrame{
 	        			 }
 	        		 }
 	        		 users_list.remove(i);
-	        		 jta.setText("");
+	        		// jta.setText("");
 	        		 for(i=0;i<users_list.size();i++){
-	        			 jta.append(users_list.get(i)+"\n");
+	        			// jta.append(users_list.get(i)+"\n");
 	        		 }
 	        	 }break;
-	        	 case 10:{//¹ã³¡¸üĞÂÏìÓ¦
+	        	 case 10:{//å¹¿åœºæ›´æ–°å“åº”
 	        		 users_square.refresh(recvseg);
 	        	 }break;
 	        	 default:break;
@@ -368,38 +383,38 @@ public class Diary extends JFrame{
 		JList<String> onlineUserList;
 		JList<String> chosenUserList;
 		
-		//´æ´¢ÒÑÑ¡ÔñÓÃ»§
+		//å­˜å‚¨å·²é€‰æ‹©ç”¨æˆ·
 		String[] chosenUser;
-		//ÒÑÑ¡ÔñÓÃ»§ÊıÁ¿
+		//å·²é€‰æ‹©ç”¨æˆ·æ•°é‡
 		int count = 0;
 		
-		public Sharediary(Socket socket)
+		public Sharediary(final Socket socket)
 		{
-			shareWordCardDialog = new JDialog(Diary.this,"·ÖÏíµ¥´Ê¿¨");
+			shareWordCardDialog = new JDialog();
 			shareWordCardDialog.setLayout(new BorderLayout());
 			
 			JPanel listPanel = new JPanel(new GridLayout(1,2));
 			//left list
-			DefaultListModel<String> modelLeft = new DefaultListModel<String>();
+			final DefaultListModel<String> modelLeft = new DefaultListModel<String>();
 			onlineUserList = new JList<String>(modelLeft);
 			JScrollPane scrollPaneLeft = new JScrollPane(onlineUserList);
 			onlineUserList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			//Ìí¼ÓËùÓĞÓÃ»§
+			//æ·»åŠ æ‰€æœ‰ç”¨æˆ·
 			for(int i=0;i<users_list.size();i++){
 				modelLeft.addElement(users_list.get(i));
 			}
-			scrollPaneLeft.setBorder(new TitledBorder("ÇëÑ¡ÔñÔÚÏßÓÃ»§"));
+			scrollPaneLeft.setBorder(new TitledBorder("è¯·é€‰æ‹©åœ¨çº¿ç”¨æˆ·"));
 			//right list
-			DefaultListModel<String> modelRight = new DefaultListModel<String>();
+			final DefaultListModel<String> modelRight = new DefaultListModel<String>();
 			chosenUserList = new JList<String>(modelRight);
 			JScrollPane scrollPaneRight = new JScrollPane(chosenUserList);
 			chosenUserList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			scrollPaneRight.setBorder(new TitledBorder("ÒÑÑ¡ÔñÓÃ»§£¬µ¥»÷È¡ÏûÑ¡Ôñ"));
+			scrollPaneRight.setBorder(new TitledBorder("å·²é€‰æ‹©ç”¨æˆ·ï¼Œå•å‡»å–æ¶ˆé€‰æ‹©"));
 			
 			listPanel.add(scrollPaneLeft);
 			listPanel.add(scrollPaneRight);
 			
-			JButton sendButton = new JButton("·¢ËÍ");
+			JButton sendButton = new JButton("å‘é€");
 			
 			chosenUser = new String[100];
 			//left list listener
@@ -413,26 +428,26 @@ public class Diary extends JFrame{
 						
 						count++;
 			
-						//²éÕÒÓÃ»§ÊÇ·ñÒÑ¾­Ñ¡Ôñ
+						//æŸ¥æ‰¾ç”¨æˆ·æ˜¯å¦å·²ç»é€‰æ‹©
 						int j;
 						for(j= 0; chosenUser[j] != null; j ++)
 							if(chosenUser[j].compareTo((String) modelLeft.getElementAt(index)) == 0)
 								break;
-						//ÓÃ»§Î´Ñ¡Ôñ
+						//ç”¨æˆ·æœªé€‰æ‹©
 						if(j == count-1)
 						{
-							//½«ĞÂÑ¡ÔñµÄÓÃ»§Ìí¼Óµ½chosenUser
+							//å°†æ–°é€‰æ‹©çš„ç”¨æˆ·æ·»åŠ åˆ°chosenUser
 							chosenUser[count-1] = (String) modelLeft.getElementAt(index);
-							//ÏÔÊ¾ĞÂÑ¡ÔñµÄÓÃ»§
+							//æ˜¾ç¤ºæ–°é€‰æ‹©çš„ç”¨æˆ·
 							modelRight.removeAllElements();
 								for(int i = 0; i < count; i++)
 									modelRight.addElement(chosenUser[i]);
 						}
 						
-						//ÓÃ»§ÒÑÑ¡Ôñ
+						//ç”¨æˆ·å·²é€‰æ‹©
 						else
 						{
-							JOptionPane.showMessageDialog(null, "ÒÑ¾­Ñ¡Ôñ¹ı¸ÃÓÃ»§£¡", "×¢Òâ", JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(null, "å·²ç»é€‰æ‹©è¿‡è¯¥ç”¨æˆ·ï¼", "æ³¨æ„", JOptionPane.INFORMATION_MESSAGE);
 							count--;
 						}
 					}
@@ -457,7 +472,7 @@ public class Diary extends JFrame{
 						for(int i = 0; i < count; i++)
 							modelRight.addElement(chosenUser[i]);
 						
-						JOptionPane.showMessageDialog(null, "ÒÑÈ¡ÏûÑ¡Ôñ£¡", "×¢Òâ", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, "å·²å–æ¶ˆé€‰æ‹©ï¼", "æ³¨æ„", JOptionPane.INFORMATION_MESSAGE);
 					}
 				}
 			});
@@ -466,27 +481,29 @@ public class Diary extends JFrame{
 			{
 				public void actionPerformed(ActionEvent e)
 				{
+					
+					
 					if(chosenUser[0] == null)
-						JOptionPane.showMessageDialog(null, "Ã»ÓĞÑ¡ÔñÓÃ»§£¡", "×¢Òâ", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, "æ²¡æœ‰é€‰æ‹©ç”¨æˆ·ï¼", "æ³¨æ„", JOptionPane.INFORMATION_MESSAGE);
 					else{
-						//Ïò·şÎñÆ÷·¢ËÍÒª·ÖÏíµÄÈÕÖ¾
+						//å‘æœåŠ¡å™¨å‘é€è¦åˆ†äº«çš„æ—¥å¿—
 						client_Segment sendseg = new client_Segment();
 						sendseg.head = 6;
-						//ÉèÖÃÒª·¢ËÍµÄºÃÓÑ£¬ÔÚÕâÀïÄ¬ÈÏÎªËùÓĞ
+						//è®¾ç½®è¦å‘é€çš„å¥½å‹ï¼Œåœ¨è¿™é‡Œé»˜è®¤ä¸ºæ‰€æœ‰
 						int i;
 						for(i=0;i<modelRight.size();i++){
 							 if(!modelRight.get(i).equals(username)){
 								 sendseg.friend_list.add(modelRight.get(i));
 							 }
 						}
-						sendseg.dairy.text=jta.getText();
+						sendseg.dairy.text=  JNTextArea.text;//jta.getText();
 						sendseg.dairy.author=username;
 						sendseg.dairy.public_flag = true;
-						sendseg.dairy.title = "123";
+						sendseg.dairy.title =  username+" "+JNTextArea.name;
 						sendseg.dairy.zan_number =0;
 						sendseg.dairy.date.setTime(new Date().getTime());
 						try {
-							//·¢ËÍµ½·şÎñÆ÷
+							//å‘é€åˆ°æœåŠ¡å™¨
 							ObjectOutputStream send =null;
 							send = new ObjectOutputStream(socket.getOutputStream());
 							send.writeObject(sendseg);
@@ -506,45 +523,45 @@ public class Diary extends JFrame{
 			
 		}	
 	}
-	//µã»÷µÇÂ½ºóÊäÈëÕË»§ºÍÃÜÂëµÄĞ¡¶Ô»°¿ò
+	//ç‚¹å‡»ç™»é™†åè¾“å…¥è´¦æˆ·å’Œå¯†ç çš„å°å¯¹è¯æ¡†
 	public class Login_Dialog{
 		
-		//Ö÷¶Ô»°¿ò
+		//ä¸»å¯¹è¯æ¡†
 		JDialog login_dialog = null;
-		//ÓÃ»§Ãû±êÇ©
-		private JLabel username_label = new JLabel("ÓÃ»§Ãû:");
-		//ÃÜÂë±êÇ©
-		private JLabel key_label = new JLabel("ÃÜ   Âë:");
-		//×¢²á°´Å¥
-		private JButton register_button = new JButton("×¢²á");
-		//µÇÂ½°´Å¥
-		private JButton login_button2 = new JButton("µÇÂ½");
-		//ÓÃ»§ÃûÌîÈëÇøÓò
+		//ç”¨æˆ·åæ ‡ç­¾
+		private JLabel username_label = new JLabel("ç”¨æˆ·å:");
+		//å¯†ç æ ‡ç­¾
+		private JLabel key_label = new JLabel("å¯†   ç :");
+		//æ³¨å†ŒæŒ‰é’®
+		private JButton register_button = new JButton("æ³¨å†Œ");
+		//ç™»é™†æŒ‰é’®
+		private JButton login_button2 = new JButton("ç™»é™†");
+		//ç”¨æˆ·åå¡«å…¥åŒºåŸŸ
 		private JTextField username_text = new JTextField(20);
-		//ÃÜÂëÌîÈëÇøÓò
+		//å¯†ç å¡«å…¥åŒºåŸŸ
 		private JPasswordField key_text = new JPasswordField(20);
-		//ÓÃ»§ÃûÃæ°å
+		//ç”¨æˆ·åé¢æ¿
 		private JPanel username_panel = new JPanel(new FlowLayout());
-		//ÃÜÂëÃæ°å
+		//å¯†ç é¢æ¿
 		private JPanel key_panel = new JPanel(new FlowLayout());
-		//´æ·ÅµÇÂ½¡¢×¢²á°´Å¥µÄÃæ°å
+		//å­˜æ”¾ç™»é™†ã€æ³¨å†ŒæŒ‰é’®çš„é¢æ¿
 		private JPanel button_panel = new JPanel(new FlowLayout());
-		//´æ·ÅÉÏÃæÈı¸öÃæ°åµÄÖ÷Ãæ°å
+		//å­˜æ”¾ä¸Šé¢ä¸‰ä¸ªé¢æ¿çš„ä¸»é¢æ¿
 		private JPanel main_panel = new JPanel();
-		/*°´Å¥Í¼Æ¬ÉèÖÃ£¬ÒÔºóÃÀ»¯Ê±ºòĞèÒªÔöÌí
-		private ImageIcon logicon = new ImageIcon("images/µÇÂ½banner.png");
-		private ImageIcon icon2 = new ImageIcon("images/µÇÂ½°´¼üÇ°.png");
-		private ImageIcon icon3 = new ImageIcon("images/µÇÂ½°´¼üºó.png");
-		private ImageIcon icon4 = new ImageIcon("images/×¢²á°´¼üÇ°.png");
-		private ImageIcon icon5 = new ImageIcon("images/×¢²á°´¼üºó.png");
+		/*æŒ‰é’®å›¾ç‰‡è®¾ç½®ï¼Œä»¥åç¾åŒ–æ—¶å€™éœ€è¦å¢æ·»
+		private ImageIcon logicon = new ImageIcon("images/ç™»é™†banner.png");
+		private ImageIcon icon2 = new ImageIcon("images/ç™»é™†æŒ‰é”®å‰.png");
+		private ImageIcon icon3 = new ImageIcon("images/ç™»é™†æŒ‰é”®å.png");
+		private ImageIcon icon4 = new ImageIcon("images/æ³¨å†ŒæŒ‰é”®å‰.png");
+		private ImageIcon icon5 = new ImageIcon("images/æ³¨å†ŒæŒ‰é”®å.png");
 		*/
-		public Login_Dialog(Socket socket){
+		public Login_Dialog(final Socket socket){
 			
-			//ÉèÖÃµÇÂ½°´Å¥Í¼Æ¬£¬ÒÔºóÔöÌí
+			//è®¾ç½®ç™»é™†æŒ‰é’®å›¾ç‰‡ï¼Œä»¥åå¢æ·»
 			/*loginbutton.setIcon(icon2);
 			loginbutton.setRolloverIcon(icon3);
 			loginbutton.setBorder(null);
-			//ÉèÖÃ×¢²á°´Å¥Í¼Æ¬
+			//è®¾ç½®æ³¨å†ŒæŒ‰é’®å›¾ç‰‡
 			newuser.setIcon(icon4);
 			newuser.setRolloverIcon(icon5);
 			newuser.setBorder(null);*/
@@ -556,19 +573,19 @@ public class Diary extends JFrame{
 			button_panel.add(login_button2,FlowLayout.LEFT);
 			button_panel.add(register_button,FlowLayout.CENTER);
 			
-			//½«Ãæ°å°´ÕÕYÖáÅÅ·Å
+			//å°†é¢æ¿æŒ‰ç…§Yè½´æ’æ”¾
 			BoxLayout box1 = new BoxLayout(main_panel,BoxLayout.Y_AXIS);
 			main_panel.setLayout(box1);
 			main_panel.add(username_panel);
 			main_panel.add(key_panel);
 			main_panel.add(button_panel);
 			
-			//¸øµÇÂ½°´Å¥Ìí¼Ó¼àÌı
+			//ç»™ç™»é™†æŒ‰é’®æ·»åŠ ç›‘å¬
 			login_button2.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
 					String uname=username_text.getText();
 					String key=String.valueOf(key_text.getPassword());
-					//·¢ËÍÓÃ»§µÇÂ¼ĞÅÏ¢
+					//å‘é€ç”¨æˆ·ç™»å½•ä¿¡æ¯
 					//BufferedWriter bufout= new BufferedWriter( new OutputStreamWriter(toServer));
 					try {
 						
@@ -586,7 +603,7 @@ public class Diary extends JFrame{
 				}
 			});
 			
-			//¸ø×¢²á°´Å¥Ìí¼Ó¼àÌı
+			//ç»™æ³¨å†ŒæŒ‰é’®æ·»åŠ ç›‘å¬
 			register_button.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
 					login_dialog.dispose();
@@ -599,9 +616,9 @@ public class Diary extends JFrame{
 			);
 		}
 		public void setup(){
-			login_dialog = new JDialog(Diary.this,"µÇÂ½",true);
+			login_dialog = new JDialog();
 
-			//ÉèÖÃµÇÂ½½çÃæµÄÍ¼Æ¬
+			//è®¾ç½®ç™»é™†ç•Œé¢çš„å›¾ç‰‡
 			//login_dialog.add(new JLabel(logicon),BorderLayout.NORTH);
 			login_dialog.add(main_panel,BorderLayout.CENTER);
 			
@@ -611,21 +628,21 @@ public class Diary extends JFrame{
 			login_dialog.setVisible(true);
 		}
 		public void setdown(){
-			JOptionPane.showMessageDialog(null, "µÇÂ½³É¹¦");
-			//¹Ø±ÕµÇÂ½¶Ô»°¿ò
+			JOptionPane.showMessageDialog(null, "ç™»é™†æˆåŠŸ");
+			//å…³é—­ç™»é™†å¯¹è¯æ¡†
 			login_dialog.dispose();
 			login_dialog=null;
-			//Òş²ØÖ÷½çÃæµÄµÇÂ½°´Å¥
+			//éšè—ä¸»ç•Œé¢çš„ç™»é™†æŒ‰é’®
 			login_button.setVisible(false);
-			welcome_label.setText("welcome£º "+username);
-			//ÏÔÊ¾Ö÷½çÃæµÄ°´Å¥
+			welcome_label.setText("welcomeï¼š "+username);
+			//æ˜¾ç¤ºä¸»ç•Œé¢çš„æŒ‰é’®
 			welcome_label.setVisible(true);
 			logout_button.setVisible(true);
 			square_button.setVisible(true);
 			up_button.setVisible(true);
 			share_button.setVisible(true);
 			
-			//ÆäËûÏÔÊ¾µÄÉèÖÃ£¬ÒÔºóĞèÒªĞŞ¸Ä
+			//å…¶ä»–æ˜¾ç¤ºçš„è®¾ç½®ï¼Œä»¥åéœ€è¦ä¿®æ”¹
 			/*user.setVisible(true);
 			beforlog.setVisible(false);
 			panel7.setVisible(false);
@@ -635,45 +652,45 @@ public class Diary extends JFrame{
 			*/
 		}
 	}
-	//µã»÷µÇÂ½ºóÊäÈëÕË»§ºÍÃÜÂëµÄĞ¡¶Ô»°¿ò
+	//ç‚¹å‡»ç™»é™†åè¾“å…¥è´¦æˆ·å’Œå¯†ç çš„å°å¯¹è¯æ¡†
 		public class register_Dialog{
 			
-			//Ö÷¶Ô»°¿ò
+			//ä¸»å¯¹è¯æ¡†
 			JDialog login_dialog = null;
-			//ÓÃ»§Ãû±êÇ©
-			private JLabel username_label = new JLabel("ÓÃ»§Ãû:");
-			//ÃÜÂë±êÇ©
-			private JLabel key_label = new JLabel("ÃÜ   Âë:");
-			//×¢²á°´Å¥
-			private JButton register_button = new JButton("ÍË³ö");
-			//µÇÂ½°´Å¥
-			private JButton login_button2 = new JButton("×¢²á");
-			//ÓÃ»§ÃûÌîÈëÇøÓò
+			//ç”¨æˆ·åæ ‡ç­¾
+			private JLabel username_label = new JLabel("ç”¨æˆ·å:");
+			//å¯†ç æ ‡ç­¾
+			private JLabel key_label = new JLabel("å¯†   ç :");
+			//æ³¨å†ŒæŒ‰é’®
+			private JButton register_button = new JButton("é€€å‡º");
+			//ç™»é™†æŒ‰é’®
+			private JButton login_button2 = new JButton("æ³¨å†Œ");
+			//ç”¨æˆ·åå¡«å…¥åŒºåŸŸ
 			private JTextField username_text = new JTextField(20);
-			//ÃÜÂëÌîÈëÇøÓò
+			//å¯†ç å¡«å…¥åŒºåŸŸ
 			private JPasswordField key_text = new JPasswordField(20);
-			//ÓÃ»§ÃûÃæ°å
+			//ç”¨æˆ·åé¢æ¿
 			private JPanel username_panel = new JPanel(new FlowLayout());
-			//ÃÜÂëÃæ°å
+			//å¯†ç é¢æ¿
 			private JPanel key_panel = new JPanel(new FlowLayout());
-			//´æ·ÅµÇÂ½¡¢×¢²á°´Å¥µÄÃæ°å
+			//å­˜æ”¾ç™»é™†ã€æ³¨å†ŒæŒ‰é’®çš„é¢æ¿
 			private JPanel button_panel = new JPanel(new FlowLayout());
-			//´æ·ÅÉÏÃæÈı¸öÃæ°åµÄÖ÷Ãæ°å
+			//å­˜æ”¾ä¸Šé¢ä¸‰ä¸ªé¢æ¿çš„ä¸»é¢æ¿
 			private JPanel main_panel = new JPanel();
-			/*°´Å¥Í¼Æ¬ÉèÖÃ£¬ÒÔºóÃÀ»¯Ê±ºòĞèÒªÔöÌí
-			private ImageIcon logicon = new ImageIcon("images/µÇÂ½banner.png");
-			private ImageIcon icon2 = new ImageIcon("images/µÇÂ½°´¼üÇ°.png");
-			private ImageIcon icon3 = new ImageIcon("images/µÇÂ½°´¼üºó.png");
-			private ImageIcon icon4 = new ImageIcon("images/×¢²á°´¼üÇ°.png");
-			private ImageIcon icon5 = new ImageIcon("images/×¢²á°´¼üºó.png");
+			/*æŒ‰é’®å›¾ç‰‡è®¾ç½®ï¼Œä»¥åç¾åŒ–æ—¶å€™éœ€è¦å¢æ·»
+			private ImageIcon logicon = new ImageIcon("images/ç™»é™†banner.png");
+			private ImageIcon icon2 = new ImageIcon("images/ç™»é™†æŒ‰é”®å‰.png");
+			private ImageIcon icon3 = new ImageIcon("images/ç™»é™†æŒ‰é”®å.png");
+			private ImageIcon icon4 = new ImageIcon("images/æ³¨å†ŒæŒ‰é”®å‰.png");
+			private ImageIcon icon5 = new ImageIcon("images/æ³¨å†ŒæŒ‰é”®å.png");
 			*/
-			public register_Dialog(Socket socket){
+			public register_Dialog(final Socket socket){
 				
-				//ÉèÖÃµÇÂ½°´Å¥Í¼Æ¬£¬ÒÔºóÔöÌí
+				//è®¾ç½®ç™»é™†æŒ‰é’®å›¾ç‰‡ï¼Œä»¥åå¢æ·»
 				/*loginbutton.setIcon(icon2);
 				loginbutton.setRolloverIcon(icon3);
 				loginbutton.setBorder(null);
-				//ÉèÖÃ×¢²á°´Å¥Í¼Æ¬
+				//è®¾ç½®æ³¨å†ŒæŒ‰é’®å›¾ç‰‡
 				newuser.setIcon(icon4);
 				newuser.setRolloverIcon(icon5);
 				newuser.setBorder(null);*/
@@ -685,19 +702,19 @@ public class Diary extends JFrame{
 				button_panel.add(login_button2,FlowLayout.LEFT);
 				button_panel.add(register_button,FlowLayout.CENTER);
 				
-				//½«Ãæ°å°´ÕÕYÖáÅÅ·Å
+				//å°†é¢æ¿æŒ‰ç…§Yè½´æ’æ”¾
 				BoxLayout box1 = new BoxLayout(main_panel,BoxLayout.Y_AXIS);
 				main_panel.setLayout(box1);
 				main_panel.add(username_panel);
 				main_panel.add(key_panel);
 				main_panel.add(button_panel);
 				
-				//¸øµÇÂ½°´Å¥Ìí¼Ó¼àÌı
+				//ç»™ç™»é™†æŒ‰é’®æ·»åŠ ç›‘å¬
 				login_button2.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						String uname=username_text.getText();
 						String key=String.valueOf(key_text.getPassword());
-						//·¢ËÍÓÃ»§µÇÂ¼ĞÅÏ¢
+						//å‘é€ç”¨æˆ·ç™»å½•ä¿¡æ¯
 						//BufferedWriter bufout= new BufferedWriter( new OutputStreamWriter(toServer));
 						try {
 							
@@ -715,7 +732,7 @@ public class Diary extends JFrame{
 					}
 				});
 				
-				//¸ø×¢²á°´Å¥Ìí¼Ó¼àÌı
+				//ç»™æ³¨å†ŒæŒ‰é’®æ·»åŠ ç›‘å¬
 				register_button.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						login_dialog.dispose();
@@ -726,9 +743,9 @@ public class Diary extends JFrame{
 				);
 			}
 			public void setup(){
-				login_dialog = new JDialog(Diary.this,"×¢²á",true);
+				login_dialog = new JDialog();
 
-				//ÉèÖÃµÇÂ½½çÃæµÄÍ¼Æ¬
+				//è®¾ç½®ç™»é™†ç•Œé¢çš„å›¾ç‰‡
 				//login_dialog.add(new JLabel(logicon),BorderLayout.NORTH);
 				login_dialog.add(main_panel,BorderLayout.CENTER);
 				
@@ -738,21 +755,21 @@ public class Diary extends JFrame{
 				login_dialog.setVisible(true);
 			}
 			public void setdown(){
-				JOptionPane.showMessageDialog(null, "×¢²á³É¹¦");
-				//¹Ø±ÕµÇÂ½¶Ô»°¿ò
+				JOptionPane.showMessageDialog(null, "æ³¨å†ŒæˆåŠŸ");
+				//å…³é—­ç™»é™†å¯¹è¯æ¡†
 				login_dialog.dispose();
 				login_dialog=null;
-				//Òş²ØÖ÷½çÃæµÄµÇÂ½°´Å¥
+				//éšè—ä¸»ç•Œé¢çš„ç™»é™†æŒ‰é’®
 				login_button.setVisible(false);
-				welcome_label.setText("welcome£º "+username);
-				//ÏÔÊ¾Ö÷½çÃæµÄ°´Å¥
+				welcome_label.setText("welcomeï¼š "+username);
+				//æ˜¾ç¤ºä¸»ç•Œé¢çš„æŒ‰é’®
 				welcome_label.setVisible(true);
 				logout_button.setVisible(true);
 				square_button.setVisible(true);
 				up_button.setVisible(true);
 				share_button.setVisible(true);
 				recv_button.setVisible(true);
-				//ÆäËûÏÔÊ¾µÄÉèÖÃ£¬ÒÔºóĞèÒªĞŞ¸Ä
+				//å…¶ä»–æ˜¾ç¤ºçš„è®¾ç½®ï¼Œä»¥åéœ€è¦ä¿®æ”¹
 				/*user.setVisible(true);
 				beforlog.setVisible(false);
 				panel7.setVisible(false);

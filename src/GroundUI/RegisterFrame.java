@@ -1,11 +1,11 @@
-package UI;
+package GroundUI;
 
 import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
 
-import segment.client_Segment;
+import Segment.client_Segment;
 
 import java.io.*;
 import java.net.Socket;
@@ -15,13 +15,13 @@ public class RegisterFrame extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JTextField username = new JTextField("ÇëÊäÈëÕËºÅ");
-	private JPasswordField password = new JPasswordField("ÇëÊäÈëÃÜÂë");
-	private JPasswordField confirm = new JPasswordField("ÇëÈ·ÈÏÃÜÂë");
-	private JButton jok = new JButton("×¢  ²á ");
+	private JTextField username = new JTextField("è¯·è¾“å…¥è´¦å·");
+	private JPasswordField password = new JPasswordField("è¯·è¾“å…¥å¯†ç ");
+	private JPasswordField confirm = new JPasswordField("è¯·ç¡®è®¤å¯†ç ");
+	private JButton jok = new JButton("æ³¨  å†Œ ");
 	private JLabel north = new JLabel("");
 	private JLabel pic = new JLabel("hello");
-	private JLabel tx = new JLabel("Í·ÏñÑ¡Ôñ");
+	private JLabel tx = new JLabel("å¤´åƒé€‰æ‹©");
 	String icon = "1";
 	private JComboBox<String> comboBox = new JComboBox<String>();
 	
@@ -31,14 +31,15 @@ public class RegisterFrame extends JFrame {
 	
 	
 //	public RegisterFrame(DictionaryClient client) {
-	public RegisterFrame(Socket socket) {
+	public RegisterFrame(final Socket socket) {
+		this.setLocationRelativeTo(null);
 		ImageIcon img = new ImageIcon("bg/bg_sky.gif"); 
 		
 		Color dblue = new Color(0,159,217);
 		jok.setBounds(247,230,80,30);
 		jok.setBackground(dblue);
 		jok.setForeground(Color.white);
-		Font font0 = new Font("Î¢ÈíÑÅºÚ",Font.PLAIN,15);
+		Font font0 = new Font("å¾®è½¯é›…é»‘",Font.PLAIN,15);
 		jok.setFont(font0);
 		jok.setBorderPainted(false);
 		
@@ -155,6 +156,11 @@ public class RegisterFrame extends JFrame {
 		setTitle("Register");
 		setSize(356,320); //353*335
 	//	setLocationRelativeTo(client);
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		Dimension size = this.getSize();
+		int x = (screenSize.width - size.width) / 2;
+		int y = (screenSize.height - size.height) / 2;
+		this.setLocation( x, y );
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setVisible(true);
@@ -195,7 +201,7 @@ public class RegisterFrame extends JFrame {
 		int portrait = comboBox.getSelectedIndex() + 1;
 		if (name != null && pwd != null && cfn != null &&  name.length()>0 && pwd.length()>0 && cfn.length()>0 && nameTyped && pwdTyped && cfnTyped) {						
 			if (!pwd.equals(cfn)) {
-				JOptionPane.showMessageDialog(null, "ÃÜÂë²»Ò»ÖÂ£¡");
+				JOptionPane.showMessageDialog(null, "å¯†ç ä¸ä¸€è‡´ï¼");
 				return;
 			}
 			else {

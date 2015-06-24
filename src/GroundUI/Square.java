@@ -1,8 +1,8 @@
-package UI;
+package GroundUI;
 
-import segment.client_Segment;
-import segment.Diary_Segment;
-import segment.Rank;
+import Segment.client_Segment;
+import Segment.Diary_Segment;
+import Segment.Rank;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -14,10 +14,10 @@ import javax.swing.*;
 
 public class Square {
 
-	//¹ã³¡¶Ô»°¿ò
+	//å¹¿åœºå¯¹è¯æ¡†
 	JDialog square_dialog = null;
 	
-	//ÅÅĞĞ°ñ±í
+	//æ’è¡Œæ¦œè¡¨
 	private ArrayList<Rank> ranks = new ArrayList<Rank>();
 	
 	private DefaultListModel<String> rank_listmodel = new DefaultListModel<String>();
@@ -26,44 +26,44 @@ public class Square {
 	
 	private JScrollPane rank_panel = new JScrollPane(rank_list);
 	
-	//ÈÕ¼ÇÁĞ±í
+	//æ—¥è®°åˆ—è¡¨
 	private ArrayList<Diary_Segment> dairy_list = new ArrayList<Diary_Segment>();
 	
-	//µ±Ç°ÏÔÊ¾µÄÈÕ¼ÇÎ»ÖÃ
+	//å½“å‰æ˜¾ç¤ºçš„æ—¥è®°ä½ç½®
 	int dairy_index=0;
-	//ÁÙÊ±ÈÕ¼ÇÏÔÊ¾Çø
+	//ä¸´æ—¶æ—¥è®°æ˜¾ç¤ºåŒº
 	private JTextArea jta = new JTextArea(); 
 	
 	private JScrollPane dairy_JSP = new JScrollPane(jta);
 	
 	JPanel dairy_panel = new JPanel();
 	
-	//ÈÕ¼ÇÏÂÒ»Æª°´Å¥
-	private JButton previous_button = new JButton("ÉÏÒ»Æª");
-	private JButton next_button = new JButton("ÏÂÒ»Æª");
-	private JButton zan_button = new JButton("µãÔŞ");
+	//æ—¥è®°ä¸‹ä¸€ç¯‡æŒ‰é’®
+	private JButton previous_button = new JButton("ä¸Šä¸€ç¯‡");
+	private JButton next_button = new JButton("ä¸‹ä¸€ç¯‡");
+	private JButton zan_button = new JButton("ç‚¹èµ");
 	
-	//ËÑË÷¿ò
+	//æœç´¢æ¡†
 	private JTextField search_text = new JTextField(20);
 	
-	//ËÑË÷¼ü
-	private JButton search_button = new JButton("ËÑË÷");
+	//æœç´¢é”®
+	private JButton search_button = new JButton("æœç´¢");
 	
 	JPanel search_panel = new JPanel();
 	
-	//ËÑË÷½á¹û
+	//æœç´¢ç»“æœ
 	private ArrayList<Diary_Segment> result_list = new ArrayList<Diary_Segment>();
 	
-	//½á¹ûÎ»ÖÃ±ê¼Ç
+	//ç»“æœä½ç½®æ ‡è®°
 	int result_index=0;
 	
-	//´ÓËÑË÷×´Ì¬·µ»Øä¯ÀÀ×´Ì¬µÄ°´Å¥
-	private JButton back_button = new JButton("·µ»Ø");
+	//ä»æœç´¢çŠ¶æ€è¿”å›æµè§ˆçŠ¶æ€çš„æŒ‰é’®
+	private JButton back_button = new JButton("è¿”å›");
 	
-	//ÏÔÊ¾¿òµÄ×´Ì¬£¬0±íÊ¾ä¯ÀÀ×´Ì¬£¬1±íÊ¾ËÑË÷×´Ì¬
+	//æ˜¾ç¤ºæ¡†çš„çŠ¶æ€ï¼Œ0è¡¨ç¤ºæµè§ˆçŠ¶æ€ï¼Œ1è¡¨ç¤ºæœç´¢çŠ¶æ€
 	int state =0;
 	
-	public Square(Socket socket){
+	public Square(final Socket socket){
 		dairy_panel.setLayout(new BorderLayout());
 		dairy_panel.add(previous_button,BorderLayout.NORTH);
 		dairy_panel.add(dairy_JSP,BorderLayout.CENTER);
@@ -76,7 +76,7 @@ public class Square {
 		search_panel.add(search_button,BorderLayout.EAST);
 		back_button.setVisible(false);
 		
-		//ÏòÇ°·­Ò³
+		//å‘å‰ç¿»é¡µ
 		previous_button.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				switch(state){
@@ -84,14 +84,14 @@ public class Square {
 					if(dairy_index >0){
 						dairy_index--;
 						jta.setText(dairy_list.get(dairy_index).title+"\n"+dairy_list.get(dairy_index).text);
-						zan_button.setText("ÔŞ"+dairy_list.get(dairy_index).zan_number);
+						zan_button.setText("èµ"+dairy_list.get(dairy_index).zan_number);
 					}
 				}break;
 				case 1:{
 					if(result_index >0){
 						result_index--;
 						jta.setText(result_list.get(result_index).title+"\n"+result_list.get(result_index).text);
-						zan_button.setText("ÔŞ"+result_list.get(result_index).zan_number);
+						zan_button.setText("èµ"+result_list.get(result_index).zan_number);
 					}
 				}break;
 				default:break;
@@ -103,7 +103,7 @@ public class Square {
 			}
 		}
 		);
-		//Ïòºó·­Ò³
+		//å‘åç¿»é¡µ
 		next_button.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				switch(state){
@@ -111,14 +111,14 @@ public class Square {
 					if(dairy_index <dairy_list.size()-1){
 						dairy_index++;
 						jta.setText(dairy_list.get(dairy_index).title+"\n"+dairy_list.get(dairy_index).text);
-						zan_button.setText("ÔŞ"+dairy_list.get(dairy_index).zan_number);
+						zan_button.setText("èµ"+dairy_list.get(dairy_index).zan_number);
 					}
 				}break;
 				case 1:{
 					if(result_index <result_list.size()-1){
 						result_index++;
 						jta.setText(result_list.get(result_index).title+"\n"+result_list.get(result_index).text);
-						zan_button.setText("ÔŞ"+result_list.get(result_index).zan_number);
+						zan_button.setText("èµ"+result_list.get(result_index).zan_number);
 					}
 				}break;
 				default:break;
@@ -128,11 +128,11 @@ public class Square {
 			}
 		}
 		);
-		//ËÑË÷ÈÕÖ¾
+		//æœç´¢æ—¥å¿—
 		search_button.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				String author=search_text.getText();
-				//·¢ËÍÓÃ»§µÇÂ¼ĞÅÏ¢
+				//å‘é€ç”¨æˆ·ç™»å½•ä¿¡æ¯
 				//BufferedWriter bufout= new BufferedWriter( new OutputStreamWriter(toServer));
 				try {
 					client_Segment s= new client_Segment();
@@ -151,12 +151,12 @@ public class Square {
 			public void actionPerformed(ActionEvent e){
 				
 				back_button.setVisible(false);
-				//·µ»Øä¯ÀÀ×´Ì¬
+				//è¿”å›æµè§ˆçŠ¶æ€
 				state=0;
 				result_list.clear();
 				
 				jta.setText(dairy_list.get(dairy_index).title+"\n"+dairy_list.get(dairy_index).text);
-				zan_button.setText("ÔŞ"+dairy_list.get(dairy_index).zan_number);
+				zan_button.setText("èµ"+dairy_list.get(dairy_index).zan_number);
 				//reg.setup(toServer);		
 			}
 		}
@@ -167,8 +167,8 @@ public class Square {
 				switch(state){
 				case 0:{
 					dairy_list.get(dairy_index).zan_number++;
-					zan_button.setText("ÔŞ"+dairy_list.get(dairy_index).zan_number);
-					//Ïò·şÎñÆ÷·¢ËÍ±»µãÔŞµÄÈÕÖ¾
+					zan_button.setText("èµ"+dairy_list.get(dairy_index).zan_number);
+					//å‘æœåŠ¡å™¨å‘é€è¢«ç‚¹èµçš„æ—¥å¿—
 					client_Segment sendseg = new client_Segment();
 					sendseg.head = 8;
 					
@@ -177,7 +177,7 @@ public class Square {
 					sendseg.dairy.date.setTime(dairy_list.get(dairy_index).date.getTime());
 					
 					try {
-						//·¢ËÍµ½·şÎñÆ÷
+						//å‘é€åˆ°æœåŠ¡å™¨
 						ObjectOutputStream send =null;
 						send = new ObjectOutputStream(socket.getOutputStream());
 						send.writeObject(sendseg);
@@ -189,8 +189,8 @@ public class Square {
 				}break;
 				case 1:{
 					result_list.get(result_index).zan_number++;
-					zan_button.setText("ÔŞ"+result_list.get(result_index).zan_number);
-					//Ïò·şÎñÆ÷·¢ËÍ±»µãÔŞµÄÈÕÖ¾
+					zan_button.setText("èµ"+result_list.get(result_index).zan_number);
+					//å‘æœåŠ¡å™¨å‘é€è¢«ç‚¹èµçš„æ—¥å¿—
 					client_Segment sendseg = new client_Segment();
 					sendseg.head = 8;
 					
@@ -199,7 +199,7 @@ public class Square {
 					sendseg.dairy.date.setTime(result_list.get(result_index).date.getTime());
 					
 					try {
-						//·¢ËÍµ½·şÎñÆ÷
+						//å‘é€åˆ°æœåŠ¡å™¨
 						ObjectOutputStream send =null;
 						send = new ObjectOutputStream(socket.getOutputStream());
 						send.writeObject(sendseg);
@@ -227,13 +227,13 @@ public class Square {
 		square_dialog.setResizable(true);
 		square_dialog.setVisible(true);	
 		
-		//×´Ì¬ÇĞ»»Îªä¯ÀÀ×´Ì¬£¬Í¬Ê±ÉèÖÃÏÔÊ¾Çé¿ö
+		//çŠ¶æ€åˆ‡æ¢ä¸ºæµè§ˆçŠ¶æ€ï¼ŒåŒæ—¶è®¾ç½®æ˜¾ç¤ºæƒ…å†µ
 		state=0;
 		dairy_index=0;
 		
-		//ÏÔÊ¾ä¯ÀÀ½á¹û
+		//æ˜¾ç¤ºæµè§ˆç»“æœ
 		jta.setText(dairy_list.get(dairy_index).title+"\n"+dairy_list.get(dairy_index).text);
-		zan_button.setText("ÔŞ"+dairy_list.get(dairy_index).zan_number);
+		zan_button.setText("èµ"+dairy_list.get(dairy_index).zan_number);
 		int i;
 		for(i=0;i<ranks.size();i++){
 			rank_listmodel.addElement(ranks.get(i).userName+": "+ranks.get(i).zan_number);
@@ -257,13 +257,13 @@ public class Square {
 		rank_listmodel.clear();
 	}
 	public void showresut(){
-		//×´Ì¬ÇĞ»»µ½ËÑË÷×´Ì¬
+		//çŠ¶æ€åˆ‡æ¢åˆ°æœç´¢çŠ¶æ€
         back_button.setVisible(true);
         result_index =0;
         state =1;
         
-        //ÏÔÊ¾ËÑËØ½á¹û
+        //æ˜¾ç¤ºæœç´ ç»“æœ
         jta.setText(result_list.get(result_index).title+"\n"+result_list.get(result_index).text);
-        zan_button.setText("ÔŞ"+result_list.get(result_index).zan_number);
+        zan_button.setText("èµ"+result_list.get(result_index).zan_number);
 	}
 }
