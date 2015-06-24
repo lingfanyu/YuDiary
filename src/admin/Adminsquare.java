@@ -20,8 +20,8 @@ import java.util.ArrayList;
 
 public class Adminsquare{//16*15
 	//广场对话框
-	JDialog square_dialog = null;
-	
+	JDialog square_dialog = new JDialog();
+	int i = 0;
 	private JPanel panelTitleBar = null;
 	private JLabel jyu = new JLabel();
 	private JLabel jsquare = new JLabel("非鱼广场");
@@ -162,16 +162,21 @@ public class Adminsquare{//16*15
 		//热门日志的响应事件
 		jdiary.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
+				if(i==0){
 				// TODO Auto-generated method stub
 				int[] indices=jdiary.getSelectedIndices();
 					//选择位置：indices[i]
-				if (diary_square != null && diary_square.isShowing())
-		    		diary_square.dispose();
-				
+				//if (diary_square != null && diary_square.isShowing())
+		    		//diary_square.dispose();
+				System.out.println("Jlist");
 				if(!diary_list.isEmpty() && indices.length>0){
+					if (diary_square != null && diary_square.isShowing())
+			    		diary_square.dispose();
+					
 					diary_square = new Admindiarysqr(socket1,diary_list.get(indices[0]));
 				}
-		    	
+				i++;
+				}else i--;
 			}
 		});
 		jsdiary.setBounds(280, 110, 600, 550);
@@ -195,6 +200,7 @@ public class Adminsquare{//16*15
 		jmain.setLayout(null);
 	}
 	public void setup(server_Segment recvseg,String name) {
+		
 		 clean();
 		 int i;
 		 for(i=0;i<recvseg.dairylist.size();i++){
@@ -211,7 +217,7 @@ public class Adminsquare{//16*15
 		for(i=0;i<ranks.size();i++){
 			 rank_listmodel.addElement(ranks.get(i).userName+": "+ranks.get(i).zan_number);
 		 }
-		square_dialog = new JDialog();
+		//square_dialog = new JDialog();
 		Color chead = new Color(246,251,253);
 		username.setText(name);
 		square_dialog.add(jyu);
