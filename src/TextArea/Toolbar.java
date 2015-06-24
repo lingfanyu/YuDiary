@@ -36,7 +36,7 @@ public class Toolbar extends JToolBar {
 	private final Button buttonCut = new Button(new ImageIcon("Icons/cut.gif"),
 			"剪切");
 	private final Button up = new Button(new ImageIcon("Icons/print.GIF"),
-			"准备上传");
+			"上载日记");
 	
 	private final Button buttonCopy = new Button(
 			new ImageIcon("Icons/copy.gif"), "复制");
@@ -142,6 +142,8 @@ public class Toolbar extends JToolBar {
 				JNTextArea.text = (textPane.getText());
 				JNTextArea.name = window.note.getTitle();
 				JNTextArea.have = 1;
+	  			JOptionPane.showMessageDialog(null,"o(*￣▽￣*)ブ可以上传/分享喽", "System Info", JOptionPane.INFORMATION_MESSAGE);
+
 			}
 		});
 		

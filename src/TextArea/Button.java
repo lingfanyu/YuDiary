@@ -25,4 +25,14 @@ public class Button extends JButton{
 		//setBorder(BorderFactory.createRaisedBevelBorder()); //凸显
 	}
 	
+	public Button(String string) {
+	
+		setText(string);
+		setBorderPainted(false); //无边框
+		setContentAreaFilled(false); //透明
+		//setMargin(new Insets(0,0,0,0)); //无空白
+		//setPreferredSize(new Dimension(22, 22)); //大小
+		
+		//setBorder(BorderFactory.createRaisedBevelBorder()); //凸显
+	}
 }

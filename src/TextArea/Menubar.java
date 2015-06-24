@@ -52,11 +52,11 @@ public class Menubar extends JMenuBar{
 	String name;
 	//文件
 	private final JMenu menuFile = new JMenu("文件(F)");
-	private final JMenuItem menuItemNew = new JMenuItem("新建");
-	private final JMenuItem menuItemOpen = new JMenuItem("打开");
+	//private final JMenuItem menuItemNew = new JMenuItem("新建");
+	//private final JMenuItem menuItemOpen = new JMenuItem("打开");
 	private final JMenuItem menuItemSave = new JMenuItem("保存");
 	private final JMenuItem menuItemSaveAs = new JMenuItem("另存");
-	private final JMenuItem menuItemExit = new JMenuItem("退出");
+	//private final JMenuItem menuItemExit = new JMenuItem("退出");
 	
 	//编辑
 	private final JMenu menuEdit = new JMenu("编辑(E)");	
@@ -84,9 +84,9 @@ public class Menubar extends JMenuBar{
 	//工具
 	private final JMenu menuTool = new JMenu("工具(T)");
 	private final JMenuItem menuItemCount = new JMenuItem("字数统计");
-	private final JMenuItem menuItemCatalog = new JMenuItem("目录显示");
-	private final JMenuItem menuItemSquare = new JMenuItem("日记广场");
-	private final JMenuItem menuItemFriend = new JMenuItem("玩伴小鱼");
+	//private final JMenuItem menuItemCatalog = new JMenuItem("目录显示");
+	//private final JMenuItem menuItemSquare = new JMenuItem("日记广场");
+	//private final JMenuItem menuItemFriend = new JMenuItem("玩伴小鱼");
 	private final JMenuItem menuItemHelp = new JMenuItem("查看帮助");
 		
 	public Menubar(Window window) {
@@ -159,11 +159,11 @@ public class Menubar extends JMenuBar{
 	private void initMenubar() {
 		add(menuFile);
 		menuFile.setMnemonic('F');
-		menuFile.add(menuItemNew);
-		menuFile.add(menuItemOpen);
+		//menuFile.add(menuItemNew);
+		//menuFile.add(menuItemOpen);
 		menuFile.add(menuItemSave);
 		menuFile.add(menuItemSaveAs);
-		menuFile.add(menuItemExit);
+		//menuFile.add(menuItemExit);
 		
 		add(menuEdit);
 		menuEdit.setMnemonic('E');
@@ -191,18 +191,18 @@ public class Menubar extends JMenuBar{
 		add(menuTool);
 		menuTool.setMnemonic('T');
 		menuTool.add(menuItemCount);
-		menuTool.add(menuItemCatalog);
-		menuTool.add(menuItemSquare);
-		menuTool.add(menuItemFriend);
+		//menuTool.add(menuItemCatalog);
+		//menuTool.add(menuItemSquare);
+		//menuTool.add(menuItemFriend);
 		menuTool.add(menuItemHelp);
 	}
 	
 	//初始化快捷键
 	private void initShortcut() {
-		menuItemNew.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
-		menuItemOpen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
+		//menuItemNew.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
+		//menuItemOpen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
 		menuItemSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
-		menuItemExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
+		//menuItemExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
 		
 		menuItemCut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_MASK));
 		menuItemCopy.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK));
@@ -220,16 +220,16 @@ public class Menubar extends JMenuBar{
 	//初始化监听器
 	private void initListener() {
 		//文件
-		menuItemNew.addActionListener(new ActionListener() {
+		/*menuItemNew.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				fileNew();
 			}
-		});		
-		menuItemOpen.addActionListener(new ActionListener() {
+		});	*/	
+		/*menuItemOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				fileOpen();
 			}
-		});	
+		});	*/
 		menuItemSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				fileSave();
@@ -240,11 +240,11 @@ public class Menubar extends JMenuBar{
 				fileSaveAs();
 			}
 		});		
-		menuItemExit.addActionListener(new ActionListener() {
+		/*menuItemExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(fileChange() >= 0) System.exit(0);
 			}
-		});
+		});*/
 
 		//编辑
 		menuItemCut.addActionListener(new ActionListener() {
@@ -373,7 +373,7 @@ public class Menubar extends JMenuBar{
 		
 		menuItemHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "该软件由group24编写，如有bug，请多多包涵",
+				JOptionPane.showMessageDialog(null, "该软件由group24编写,如有bug，请多多包涵",
 						"帮助", JOptionPane.PLAIN_MESSAGE);
 			}
 		});
